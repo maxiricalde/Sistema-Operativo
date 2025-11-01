@@ -1,15 +1,16 @@
 //import java.util.Scanner;
+import java.math.BigDecimal;
 public class MainProcesos {
     
     public static void main(String[] args) {
         //Scanner scann=new Scanner(System.in);
-        ListaProcesos lista=new ListaProcesos((double)0.90);
+        ListaProcesos lista=new ListaProcesos(new BigDecimal ("0.90"));
 
-        lista.agregarProceso(new Proceso((double)15.0,(double)00,(double)1.380));
-        lista.agregarProceso(new Proceso((double)15.0,(double)10,(double)0.955));
-        lista.agregarProceso(new Proceso((double)15.0,(double)15,(double)1.655));
-        lista.agregarProceso(new Proceso((double)15.0,(double)20,(double)1.250));
-        lista.agregarProceso(new Proceso((double)15.0,(double)25,(double)0.960));
+        lista.agregarProceso(new Proceso("15","0","1.380"));
+        lista.agregarProceso(new Proceso ("15","10","0.955"));
+        lista.agregarProceso(new Proceso("15","15","1.655"));
+        lista.agregarProceso(new Proceso("15","20","1.250"));
+        lista.agregarProceso(new Proceso("15","25","0.960"));
         lista.ejecutar();
 
 

@@ -1,41 +1,45 @@
+
+import java.math.BigDecimal;
+//import java.math.RoundingMode;
 public class Proceso {
 
-    private double horaIni;
-    private double minutoIni;    
+    private BigDecimal horaIni;
+    private BigDecimal minutoIni;    
     private int nProceso;
-    private double tNecesario;
-    private double tInicio;
+    private BigDecimal tNecesario;
+    private BigDecimal tInicio;
     private boolean enEjecucion;
     private static int contadorProcesos = 0;
 
-    public Proceso(double horaIni, double minutoIni, double tNecesario) {
-        this.horaIni = horaIni;
-        this.minutoIni = minutoIni;
-        this.tNecesario = tNecesario;
+    public Proceso(String horaIni, String minutoIni, String tNecesario) {
+        this.horaIni = new BigDecimal(horaIni);
+        this.minutoIni = new BigDecimal(minutoIni);
+        this.tNecesario = new BigDecimal (tNecesario);
         this.nProceso = this.setnProceso();
-        this.tInicio = horaIni*60 + minutoIni;
+        this.tInicio = new BigDecimal("0");
+        this.tInicio = this.horaIni.multiply(new BigDecimal("60")).add(this.minutoIni);
         this.enEjecucion = false;
     }
-    public double gettInicio() {
+    public BigDecimal gettInicio() {
         return tInicio;
     }
-    public void settInicio(double tInicio) {
+    public void settInicio(BigDecimal tInicio) {
         this.tInicio = tInicio;
     }
 
-    public double getHoraIni() {
+    public BigDecimal getHoraIni() {
         return horaIni;
     }
 
-    public void setHoraIni(double horaIni) {
+    public void setHoraIni(BigDecimal horaIni) {
         this.horaIni = horaIni;
     }
 
-    public double getMinutoIni() {
+    public BigDecimal getMinutoIni() {
         return minutoIni;
     }
 
-    public void setMinutoIni(double minutoIni) {
+    public void setMinutoIni(BigDecimal minutoIni) {
         this.minutoIni = minutoIni;
     }
 
@@ -48,11 +52,11 @@ public class Proceso {
         return contadorProcesos;
     }
 
-    public double gettNecesario() {
+    public BigDecimal gettNecesario() {
         return tNecesario;
     }
 
-    public void settNecesario(double tNecesario) {
+    public void settNecesario(BigDecimal tNecesario) {
         this.tNecesario = tNecesario;
     }
     public boolean isEnEjecucion() {
@@ -62,6 +66,7 @@ public class Proceso {
         this.enEjecucion = enEjecucion;
     }
     public String toString(){
-        return "Proceso N° "+nProceso+" inicializado a las "+horaIni+":"+minutoIni+" con tiempo estimado de ejecucion de "+tNecesario;
+        return "Proceso N° "+nProceso+" inicializado a las "+horaIni+":"+minutoIni+" con tiempo estimado de ejecucion de "+" minutos."+
+               " Inicia en el minuto: "+tInicio;
     }
 }
