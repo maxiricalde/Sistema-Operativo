@@ -118,7 +118,7 @@ public class ListaProcesos {
         num=num.abs();
         return num.compareTo(epcilon)<1;
     }
-// ANTES (Incorrecto)
+// ANTES 
 /*
 private int iniciaProceso(double tiempo,int pos2){
     boolean ban=true;
@@ -138,7 +138,7 @@ private int iniciaProceso(double tiempo,int pos2){
 }
 */
 
-// DESPUÉS (Correcto y Eficiente)
+// DESPUÉS
 private int iniciaProceso(BigDecimal tiempo, int posActual) {
     int pos = posActual; // Empezamos a revisar desde el último proceso que consideramos
 
@@ -152,7 +152,6 @@ private int iniciaProceso(BigDecimal tiempo, int posActual) {
             // Solo lo iniciamos si no estaba ya en ejecución
             if (!p.isEnEjecucion()) {
                 p.setEnEjecucion(true);
-                // Imprimimos un mensaje para depuración (opcional)
                 System.out.println("--- Iniciando Proceso N° " + p.getnProceso() + " en tiempo " + String.format("%.3f", tiempo) + " ---");
             }
             // Avanzamos al siguiente proceso de la lista
