@@ -48,8 +48,10 @@ public class ListaProcesos {
         BigDecimal pn;
         BigDecimal promESbd= promES;
         BigDecimal n = BigDecimal.valueOf(procesosEnEjecucion()) ; 
+        if (n.compareTo(BigDecimal.ZERO)==0){
+            return BigDecimal.ZERO;
+        }
         return (BigDecimal.ONE).subtract(promESbd.pow(procesosEnEjecucion())).divide(n,10,RoundingMode.HALF_UP);
-        //return (double)Math.pow((double)1-promES,(double) procesosEnEjecucion());
     }
     public int procesosEnEjecucion(){
         int cant=0;
@@ -72,27 +74,26 @@ public class ListaProcesos {
             tiempoAux=tiempoAct;
             pos=iniciaProceso(tiempoAct,pos);
             this.pn = calcularPn();
-            //pos = pos + procesosEnEjecucion();
-            System.out.println("pos ="+pos);
-            BigDecimal tiempoParaFinProceso = tiempoAct.add(minTesperado(pn)); // Calcula el tiempo absoluto de finalización del próximo proceso en ejecución.
-            if(pos < procesos.size()){
-                // El próximo evento será lo que ocurra primero:
-                // 1. Que termine un proceso en ejecución.
-                // 2. Que llegue un nuevo proceso.
-                tiempoAct = tiempoParaFinProceso.min(procesos.get(pos).gettInicio());
-            } else {
-                // Si no hay más procesos por llegar, el próximo evento es sí o sí que uno termine.
-                tiempoAct = tiempoParaFinProceso;
+            if(pn==BigDecimal.ZERO){
+                tiempoAct=procesos.get(pos).gettInicio();
             }
+            else {
+                BigDecimal tiempoParaFinProceso = tiempoAct.add(minTesperado(pn)); // Calcula el tiempo absoluto de finalización del próximo proceso en ejecución.
+                 if(pos < procesos.size()){
+                    // El próximo evento será lo que ocurra primero:
+                    // 1. Que termine un proceso en ejecución.
+                   // 2. Que llegue un nuevo proceso.
+                      tiempoAct = tiempoParaFinProceso.min(procesos.get(pos).gettInicio());
+                  } else {
+                      // Si no hay más procesos por llegar, el próximo evento es sí o sí que uno termine.
+                   tiempoAct = tiempoParaFinProceso;
+            }
+        }
             for(int i=0;i<this.procesos.size();i++){
                 if(this.procesos.get(i).isEnEjecucion()==true){
                     this.procesos.get(i).settNecesario(this.procesos.get(i).gettNecesario().subtract(tiempoAct.subtract(tiempoAux).multiply(pn)));
-                    System.out.println("Proceso N° "+this.procesos.get(i).getnProceso()
-                        +" le queda un tiempo de "+ this.procesos.get(i).gettNecesario());
                     //System.out.println(esCero(this.procesos.get(i).gettNecesario()));
                     if(esCero(this.procesos.get(i).gettNecesario())){
-                        System.out.println("El proceso N° "+this.procesos.get(i).getnProceso()
-                            +" ha terminado su ejecucion."+" Tiempo: "+ tiempoAct);
                         this.quitarProceso(i,tiempoAct);
                     }
                 }
@@ -109,7 +110,7 @@ public class ListaProcesos {
     private void quitarProceso(int nProceso,BigDecimal tiempoAct){
         procesos.get(nProceso).setEnEjecucion(false);
         System.out.println("Proceso N° "+procesos.get(nProceso).getnProceso()
-            +" tardo en ejecutarse "+ tiempoAct);
+            +" tardo en ejecutarse "+ tiempoAct.setScale(4, RoundingMode.HALF_UP));
         cont--;      //se muere el proceso
     }
     

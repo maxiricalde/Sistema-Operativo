@@ -4,13 +4,15 @@ public class MainProcesos {
     
     public static void main(String[] args) {
         //Scanner scann=new Scanner(System.in);
-        ListaProcesos lista=new ListaProcesos(new BigDecimal ("0.90"));
+        ListaProcesos lista=new ListaProcesos(new BigDecimal ("0.50"));
 
+        lista.agregarProceso(new Proceso("15","0","1.380"));
         lista.agregarProceso(new Proceso("15","0","1.380"));
         lista.agregarProceso(new Proceso ("15","10","0.955"));
         lista.agregarProceso(new Proceso("15","15","1.655"));
         lista.agregarProceso(new Proceso("15","20","1.250"));
         lista.agregarProceso(new Proceso("15","25","0.960"));
+
         lista.ejecutar();
 
 
