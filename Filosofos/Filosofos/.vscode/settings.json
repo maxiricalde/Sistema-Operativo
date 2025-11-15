@@ -1,0 +1,10 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar"
+    ],
+
+    "java.project.targetMode": "25",
+    "java.jdt.ls.vmargs": "--enable-preview"
+}
